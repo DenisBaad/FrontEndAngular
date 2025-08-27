@@ -1,0 +1,23 @@
+<mat-toolbar class="toolbar-menu" [class.mat-elevation-z4]="shadow">
+  <mat-toolbar-row>
+
+    <a style="margin-right: 5px; cursor: auto;" mat-button class="logo">
+      <mat-icon fontSet="fa" style="color: white;" fontIcon="fa-industry"></mat-icon>
+      <span class="title" style="color: white;" *ngIf="!popText">Apolo </span>
+    </a>
+
+    <div class="content-center">
+      <mat-slide-toggle [formControl]="toogleControl" [matTooltip]="toogleControl.value ? 'Ativar modo claro' : 'Ativar modo escuro'">
+        <span style="color: white !important; margin-right: 30px;">Dark Mode</span>
+      </mat-slide-toggle>
+    </div>
+
+    <div *ngIf="!isLoginPage">
+      <button mat-raised-button color="warn" (click)="handleLogout()" style="display: flex; align-items: center; gap: 8px; margin-right: 20px; padding: 20px; ">
+        <mat-icon>logout</mat-icon>
+        <span>Sair</span>
+      </button>
+    </div>
+
+  </mat-toolbar-row>
+</mat-toolbar>

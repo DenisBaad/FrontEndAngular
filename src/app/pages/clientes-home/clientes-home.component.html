@@ -1,0 +1,8 @@
+<div class="margem">
+  <app-clientes-table
+  [clienteData]="clienteData"
+  [isLoading]="isLoading"
+  (openFormEvent)="handleClienteEvent($event)"
+  (ativarInativarEvent)="handleAtivarInativar($event)"
+  ></app-clientes-table>
+</div>

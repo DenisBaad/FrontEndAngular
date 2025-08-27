@@ -1,0 +1,102 @@
+<div mat-dialog-content>
+  <h2>{{ item.cliente ? 'Formulário De Edição' : 'Formulário De Criação'}}</h2>
+
+    <form [formGroup]="clienteForm">
+      <div fxLayout="row wrap">
+        <mat-form-field fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15">
+          <mat-label>Código</mat-label>
+          <input matInput formControlName="codigo">
+          <mat-error *ngIf="clienteForm.get('codigo')?.hasError('required')">
+            Este campo é obrigatório
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+          <mat-label>Tipo</mat-label>
+          <mat-select formControlName="tipo">
+            <mat-option *ngFor="let option of clienteTipo" [value]="option.value">
+              {{option.label}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="clienteForm.get('tipo')?.hasError('required')">
+            Este campo é obrigatório
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+          <mat-label>CPF/CNPJ</mat-label>
+          <input matInput formControlName="cpfCnpj">
+          <mat-error *ngIf="clienteForm.get('cpfCnpj')?.hasError('required')">
+            Este campo é obrigatório
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status">
+            <mat-option *ngFor="let option of clienteStatus" [value]="option.value">
+              {{option.label}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="clienteForm.get('status')?.hasError('required')">
+            Este campo é obrigatório
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+          <mat-label>Nome</mat-label>
+          <input matInput formControlName="nome">
+          <mat-error *ngIf="clienteForm.get('nome')?.hasError('required')">
+            Este campo é obrigatório
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+          <mat-label>Identidade</mat-label>
+          <input matInput formControlName="identidade">
+        </mat-form-field>
+
+        <mat-form-field fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+          <mat-label>Orgão Expedidor</mat-label>
+          <input matInput formControlName="orgaoExpedidor">
+        </mat-form-field>
+
+        <mat-form-field fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+          <mat-label>Data de Nascimento</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="dataNascimento" placeholder="DD/MM/YYYY" (click)="picker.open()">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="clienteForm.get('dataNascimento')?.hasError('required')">
+            Este campo é obrigatório
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+          <mat-label>Nome Fantasia</mat-label>
+          <input matInput formControlName="nomeFantasia">
+        </mat-form-field>
+
+        <mat-form-field fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="25">
+          <mat-label>Contato (E-mail ou Telefone)</mat-label>
+          <input matInput formControlName="contato" [mask]="mask || null" (input)="onContatoInput()" autocomplete="off"/>
+          <mat-error *ngIf="clienteForm.get('contato')?.hasError('required')">
+            Este campo é obrigatório
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="button">
+        <button mat-raised-button color="warn" (click)="onClose()" type="button" matTooltip="Fechar" style="margin-right: 10px;">
+          Fechar
+        </button>
+
+        <button mat-raised-button color="accent" matTooltip="{{ item?.cliente ? 'Carregar' : 'Limpar' }}" style="margin-right: 10px;" (click)="buttonResetOrCharge()">
+          {{ item.cliente ? 'Carregar' : 'Limpar' }}
+        </button>
+
+        <button mat-raised-button color="primary" matTooltip="{{ item?.cliente ? 'Salvar' : 'Cadastrar'}}" (click)="onSubmitForm()">
+          {{ item?.cliente ? 'Salvar' : 'Cadastrar'}}
+        </button>
+      </div>
+    </form>
+</div>

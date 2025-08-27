@@ -1,0 +1,53 @@
+<mat-dialog-content class="mat-typography">
+  <h2>{{ item.plano ? 'Formulário De Edição' : 'Formulário De Criação'}}</h2>
+
+    <form [formGroup]="form">
+      <div fxLayout="row wrap" style="margin-bottom: 30px;">
+        <mat-form-field appearance="fill" fxFlex="100" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="25" fxFlex.xl="50">
+          <mat-label>Descrição</mat-label>
+          <input matInput formControlName="descricao">
+          <mat-error *ngIf="form.get('descricao')?.hasError('required')">
+            Este campo é obrigatório
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" fxFlex="100" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="25" fxFlex.xl="50">
+          <mat-label>Valor Plano</mat-label>
+          <input matInput formControlName="valorPlano" appFormatarMoeda>
+          <mat-error *ngIf="form.get('valorPlano')?.hasError('required')">
+            Este campo é obrigatório
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" fxFlex="100" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="25" fxFlex.xl="50">
+          <mat-label>Quantidade Usuários</mat-label>
+          <input matInput formControlName="quantidadeUsuarios">
+          <mat-error *ngIf="form.get('quantidadeUsuarios')?.hasError('required')">
+            Este campo é obrigatório
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" fxFlex="100" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="25" fxFlex.xl="50">
+          <mat-label>Vigência Meses</mat-label>
+          <input matInput formControlName="vigenciaMeses">
+          <mat-error *ngIf="form.get('vigenciaMeses')?.hasError('required')">
+            Este campo é obrigatório
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="button">
+          <button mat-raised-button color="warn" (click)="onClose()" type="button" matTooltip="Fechar" style=" margin-right: 10px;">
+            Fechar
+          </button>
+
+          <button mat-raised-button color="accent" (click)="onClearForm()" type="button" style="margin-right: 10px;">
+            {{ item.plano ? 'Carregar' : 'Limpar' }}
+          </button>
+
+          <button mat-raised-button color="primary" (click)="onSubmitForm()">
+            {{ item.plano ? 'Alterar' : 'Adicionar' }}
+          </button>
+      </div>
+    </form>
+</mat-dialog-content>

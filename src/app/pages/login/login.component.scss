@@ -1,0 +1,45 @@
+mat-form-field{
+  padding: 2px;
+}
+
+mat-card-title{
+  text-align: center;
+  padding: 20px;
+}
+
+:host-context(body.theme-dark) mat-icon,
+:host-context(body.theme-dark) mat-card-title {
+  color: white;
+}
+
+.grid {
+  background-image: url('../../../assets/login_background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.buttons-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.buttons-stack button {
+  max-width: 320px;
+  width: 100%;
+}
+
+

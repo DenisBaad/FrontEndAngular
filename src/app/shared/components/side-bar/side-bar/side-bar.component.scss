@@ -1,0 +1,63 @@
+mat-sidenav-content {
+  height: 100vh;
+}
+
+.toolbar-submenu {
+  height: 205px;
+  font-size: 2rem;
+  padding: 60px 0 0 0;
+}
+
+.sidenav {
+  width: 300px;
+  margin-top: 64px;
+
+  .mat-icon{
+    margin: 10px 20px 0 0;
+    font-size: 18px;
+  }
+
+  h1 {
+    text-align: center;
+    margin: 8px 0;
+  }
+
+  .name {
+    align-items: center;
+    margin-top: 8px;
+    font-weight: normal;
+    font-size: 23px;
+  }
+
+  mat-nav-list{
+    padding: 8px;
+    a{
+      border-radius: 10px;
+      margin-bottom: 10px;
+      padding-top: 1px;
+      font-size: 0.9rem;
+
+      span{
+        margin-top: 7px !important;
+        position: fixed;
+      }
+    }
+
+    a:hover, .active {
+      background: linear-gradient(to top, rgba(175, 221, 243, 0.445), rgba(0, 248, 186, 0.26));
+    }
+  }
+
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+}
+
+mat-toolbar-row button[mat-icon-button] .mat-icon {
+  color: white !important;       
+}
+
+

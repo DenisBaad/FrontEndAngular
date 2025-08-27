@@ -1,0 +1,4 @@
+<div>
+  <img [src]="imageUrl || placeholder" [height]="height" [width]="width" [ngClass]="{ 'rounded-image': isRounded, 'square-image': !isRounded }" (click)="inputField.click()" style="cursor: pointer;"/>
+  <input type="file" #inputField hidden (change)="fileSelected($event)" (click)="inputField.value=''"/>
+</div>

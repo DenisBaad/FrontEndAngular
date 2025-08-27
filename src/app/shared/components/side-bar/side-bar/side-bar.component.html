@@ -1,0 +1,64 @@
+<app-toolbar-menu [menuTitle]="menuName"></app-toolbar-menu>
+
+<ng-container *ngIf="!isLoginRoute; else loginContent">
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav class="sidenav mat-elevation-z2" [opened]="!isSmallScreen" [fixedInViewport]="true" [mode]="sidenavMode">
+
+      <div matTooltip="Alterar imagem">
+        <input type="text" hidden>
+        <div class="container">
+          <app-image-control [width]="163" [height]="163" [imageUrl]="imageUrl" [isRounded]="isRounded"></app-image-control>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: center; margin-top: 15px;">
+        <button mat-raised-button color="primary" (click)="toggleImageShape()">
+          <mat-icon style="padding-bottom: 9px;">
+            {{ isRounded ? 'crop_square' : 'circle' }}
+          </mat-icon>
+          Alternar Formato
+        </button>
+      </div>
+
+      <h1 class="name">{{USUARIO_LOGADO}}</h1>
+
+      <mat-nav-list style="margin-top: 30px;">
+        <ng-container *ngFor="let item of items_menu; let i = index">
+          <a *ngIf="!item.children" mat-list-item [routerLink]="item.link" routerLinkActive="active">
+            <mat-icon fontSet="fa" [fontIcon]="item.icon"></mat-icon>
+            <span>{{ item.label }}</span>
+          </a>
+
+          <ng-container *ngIf="item.children">
+            <a mat-list-item (click)="toggleSubMenu(i)">
+              <mat-icon fontSet="fa" [fontIcon]="item.icon"></mat-icon>
+              <span>{{ item.label }}</span>
+              <mat-icon class="expand-icon">{{ expandedIndex === i ? 'expand_less' : 'expand_more' }}</mat-icon>
+            </a>
+          </ng-container>
+        </ng-container>
+      </mat-nav-list>
+
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <mat-toolbar class="toolbar-submenu" color="primary">
+        <mat-toolbar-row>
+          <button mat-icon-button (click)="sidenav.toggle()">
+            <mat-icon>{{sidenav.opened ? 'close' : 'menu'}}</mat-icon>
+          </button>
+        </mat-toolbar-row>
+
+        <mat-toolbar-row style="padding-bottom: 20px; padding-left: 20px;">
+          <span *ngIf="!popText">{{menuName}}</span>
+        </mat-toolbar-row>
+      </mat-toolbar>
+
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</ng-container>
+
+<ng-template #loginContent>
+  <router-outlet></router-outlet>
+</ng-template>

@@ -1,0 +1,9 @@
+<div class="margem">
+  <app-faturas-table
+  [faturasDatas]="faturasDatas"
+  [planosDatas]="planosDatas"
+  [clientesDatas]="clientesDatas"
+  [isLoading]="isLoading"
+  (openFormEvent)="handleFaturaEvent($event)"
+  ></app-faturas-table>
+</div>

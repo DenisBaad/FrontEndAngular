@@ -1,0 +1,55 @@
+<div class="grid">
+  <mat-card>
+    <mat-card-title>{{ isCadastroMode ? 'Criar conta' : 'Login' }}</mat-card-title>
+
+    <mat-card-content>
+      <form [formGroup]="loginForm">
+        <div fxLayout="row wrap" style="margin-bottom: 30px;">
+
+          <mat-form-field *ngIf="isCadastroMode" appearance="fill" fxFlex="100" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+            <mat-label>Nome</mat-label>
+            <input matInput formControlName="nome" required>
+            <mat-error *ngIf="loginForm.get('nome')?.hasError('required')">
+              Nome é obrigatório
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" fxFlex="100" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" required>
+            <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+              Email é obrigatório
+            </mat-error>
+            <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+              Por favor, insira um e-mail válido.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" fxFlex="100" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg= "100" fxFlex.xl="100">
+            <mat-label>Senha</mat-label>
+            <input matInput [type]="hideSenha ? 'password' : 'text'" formControlName="senha" autocomplete="new-password" required>
+            <button mat-icon-button matSuffix (click)="toggleSenhaVisibility()" [attr.aria-label]="'Exibir ou ocultar senha'" [attr.aria-pressed]="!hideSenha" type="button">
+              <mat-icon>{{ hideSenha ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            <mat-error *ngIf="loginForm.get('senha')?.hasError('required')">
+              Senha é obrigatório
+            </mat-error>
+          </mat-form-field>
+
+          <mat-checkbox formControlName="lembrarEmail">Lembrar meu e-mail</mat-checkbox>
+
+          <div class="buttons-stack">
+            <button mat-raised-button color="primary" mat-button (click)="onSubmitForm()">
+              {{ isCadastroMode ? 'Cadastrar' : 'Login' }}
+            </button>
+
+            <button mat-button type="button" (click)="toggleCadastroMode()">
+              {{ isCadastroMode ? 'Já tenho uma conta' : 'Cadastrar usuário' }}
+            </button>
+          </div>
+
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
