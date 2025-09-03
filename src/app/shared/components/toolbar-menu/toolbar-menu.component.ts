@@ -1,9 +1,8 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { MenuItem } from '../../models/interfaces/responses/menu-item';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -32,22 +31,13 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class ToolbarMenuComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
-  @Input() menuTitle: string = '';
-  @Input() shadow = false;
-  @Input() popText = false;
-  @Input() items_menu: MenuItem[] = [];
-  public USUARIO_INFO! : string;
-  public USUARIO_LOGADO! : string;
   public isLoginPage: boolean = false;
   toogleControl = new FormControl(false);
   @HostBinding('class') className = '';
   darkClassName = 'theme-dark';
   lightClassName = 'theme-light';
 
-  constructor(private cookie: CookieService, private router: Router, private overlay: OverlayContainer) {
-    this.USUARIO_INFO = this.cookie.get('USUARIO_INFORMACOES');
-    this.USUARIO_LOGADO = this.cookie.get('USUARIO_NOME');
-  }
+  constructor(private cookie: CookieService, private router: Router, private overlay: OverlayContainer) {}
 
   ngOnInit() {
     this.isLoginPage = this.router.url.includes('/login');

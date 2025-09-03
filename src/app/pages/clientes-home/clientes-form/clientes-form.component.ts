@@ -49,7 +49,7 @@ export class ClientesFormComponent implements OnInit {
     { label: 'Inativo', value: EnumStatusCliente.Inativo},
   ]
 
-  constructor(private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public item: any, public dialogRef: MatDialogRef<ClientesFormComponent>){}
+  constructor(private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public item: any, public dialogRef: MatDialogRef<ClientesFormComponent>) {}
 
   ngOnInit(): void {
     this.formCliente();
@@ -111,7 +111,7 @@ export class ClientesFormComponent implements OnInit {
         formValue.contato = formValue.contato.replace(/\D/g, '');
       }
 
-      this.handleFormSubmit.emit({ formValue, id: this.item.cliente?._id, dialogRef: this.dialogRef });
+      this.handleFormSubmit.emit({ formValue, id: this.item.cliente?.id, dialogRef: this.dialogRef });
     }
   }
 

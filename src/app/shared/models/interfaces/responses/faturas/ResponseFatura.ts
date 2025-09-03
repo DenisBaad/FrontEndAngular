@@ -1,7 +1,7 @@
 import { EnumStatusFatura } from "../../../enums/enumStatusFatura";
 
 export interface ResponseFatura {
-  _id?: string;
+  id?: string;
   clienteId: string;
   planoId: string;
   status: EnumStatusFatura;

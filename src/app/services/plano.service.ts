@@ -22,15 +22,15 @@ export class PlanoService {
   };
 
   Post(plano: RequestPlano): Observable<ResponsePlano> {
-    return this.http.post<ResponsePlano>(`${this.API_URL}/planos`, plano,this.httpOptions).pipe(take(1));
+    return this.http.post<ResponsePlano>(`${this.API_URL}/plano`, plano,this.httpOptions).pipe(take(1));
   }
 
   Get(): Observable<ResponsePlano[]> {
-    return this.http.get<ResponsePlano[]>(`${this.API_URL}/planos`, this.httpOptions);
+    return this.http.get<ResponsePlano[]>(`${this.API_URL}/plano`, this.httpOptions);
   }
 
   Put(plano: RequestPlano, id?: string): Observable<void> {
-    return this.http.put<void>(`${this.API_URL}/planos/${id}`, plano, this.httpOptions).pipe(take(1));
+    return this.http.put<void>(`${this.API_URL}/plano/${id}`, plano, this.httpOptions).pipe(take(1));
   }
 }
 

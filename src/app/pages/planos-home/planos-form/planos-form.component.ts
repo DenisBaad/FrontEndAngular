@@ -63,7 +63,7 @@ export class PlanosFormComponent implements OnInit {
     if (this.form.valid) {
       const formValue = { ...this.form.value };
 
-      this.handleFormSubmit.emit({ formValue, id: this.item.plano?._id, dialogRef: this.dialogRef });
+      this.handleFormSubmit.emit({ formValue, id: this.item.plano?.id, dialogRef: this.dialogRef });
     }
   }
 

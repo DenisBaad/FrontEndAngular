@@ -94,7 +94,7 @@ export class FaturasFormComponent implements OnInit {
     if (this.form.valid) {
       const formValue = { ...this.form.value };
 
-      this.handleFormSubmit.emit({ formValue, id: this.item.fatura?._id, dialogRef: this.dialogRef });
+      this.handleFormSubmit.emit({ formValue, id: this.item.fatura?.id, dialogRef: this.dialogRef });
     }
   }
 

@@ -1,5 +1,5 @@
 export interface ResponsePlano {
-  _id?: string;
+  id?: string;
   descricao: string;
   valorPlano: number;
   quantidadeUsuarios: number;

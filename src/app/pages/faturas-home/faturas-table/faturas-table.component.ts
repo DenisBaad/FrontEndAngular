@@ -45,12 +45,6 @@ export class FaturasTableComponent implements AfterViewInit {
   dataSource = new MatTableDataSource<ResponseFatura>();
   displayedColumns: string[] = ['status', 'inicioVigencia', 'fimVigencia', 'valorTotal', 'planoId', 'clienteId', 'acoes'];
 
-  public faturaStatusOptions = [
-    { label: 'Aberto', value: EnumStatusFatura.Aberto },
-    { label: 'Atrasado', value: EnumStatusFatura.Atrasado },
-    { label: 'Pago', value: EnumStatusFatura.Pago },
-  ];
-
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
@@ -59,6 +53,15 @@ export class FaturasTableComponent implements AfterViewInit {
     if (this.faturasDatas) {
       this.dataSource.data = this.faturasDatas;
     }
+  }
+
+  statusFatura(status: EnumStatusFatura) {
+    const statuss = {
+      [EnumStatusFatura.Aberto]: 'Aberto',
+      [EnumStatusFatura.Atrasado]: 'Atrasado',
+      [EnumStatusFatura.Pago]: 'Pago'
+    }
+    return statuss [status]
   }
 
   search(event: Event) {
@@ -72,18 +75,11 @@ export class FaturasTableComponent implements AfterViewInit {
   }
 
   public getPlanoDescricao(planoId: string): string {
-    const plano = this.planosDatas?.find(cat => cat._id === planoId);
-    return plano ? plano.descricao : 'Plano não encontrado';
+    return this.planosDatas?.find(cat => cat.id === planoId)?.descricao ?? 'Plano não encontrado';
   }
 
   public getNomeCliente(clienteId: string): string {
-    const cliente = this.clientesDatas?.find(cat => cat._id === clienteId);
-    return cliente ? cliente.nome : 'Cliente não encontrado';
-  }
-
-  public getStatusLabel(status?: EnumStatusFatura): string {
-    const option = this.faturaStatusOptions.find(option => option.value === status);
-    return option ? option.label : '-';
+    return this.clientesDatas?.find(cat => cat.id === clienteId)?.nome ?? 'Cliente não encontrado';
   }
 
   openForm(fatura?: ResponseFatura) {

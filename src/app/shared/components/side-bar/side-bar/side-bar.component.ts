@@ -50,7 +50,6 @@ export class SideBarComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   public expandedIndex: number | null = null;
   public isSmallScreen = false;
-  public popText = false;
   public items_menu: MenuItem[] = menuItems;
   private cookie = inject(CookieService);
   public menuName: string = '';

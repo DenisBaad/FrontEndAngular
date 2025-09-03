@@ -23,15 +23,15 @@ export class FaturaService {
   };
 
   Post(fatura: RequestFatura): Observable<ResponseFatura> {
-    return this.http.post<ResponseFatura>(`${this.API_URL}/faturas`, fatura,this.httpOptions).pipe(take(1));
+    return this.http.post<ResponseFatura>(`${this.API_URL}/fatura`, fatura,this.httpOptions).pipe(take(1));
   }
 
   Get(): Observable<ResponseFatura[]> {
-    return this.http.get<ResponseFatura[]>(`${this.API_URL}/faturas`, this.httpOptions);
+    return this.http.get<ResponseFatura[]>(`${this.API_URL}/fatura`, this.httpOptions);
   }
 
   Put(fatura: RequestFatura, id?: string): Observable<void> {
-    return this.http.put<void>(`${this.API_URL}/faturas/${id}`, fatura, this.httpOptions).pipe(take(1));
+    return this.http.put<void>(`${this.API_URL}/fatura/${id}`, fatura, this.httpOptions).pipe(take(1));
   }
 
   public getRelatorioFaturas(usuarioLogadoNome: string, dataAbertura: Date | null, dataFechamento: Date | null, status: EnumStatusFatura | null, clientesSelecionados: string[]): Observable<any> {
@@ -41,7 +41,7 @@ export class FaturaService {
     .map(id => `clienteId=${encodeURIComponent(id)}`)
     .join('&');
 
-    let url = `${this.API_URL}/faturas/gerar-relatorio-faturas-clientes?usuarioNome=${encodeURIComponent(usuarioLogadoNome)}`;
+    let url = `${this.API_URL}/fatura/gerar-relatorio-faturas-clientes?usuarioNome=${encodeURIComponent(usuarioLogadoNome)}`;
 
     if (clientesSelecionados.length > 0) {
       url += `&${clienteQuery}`;

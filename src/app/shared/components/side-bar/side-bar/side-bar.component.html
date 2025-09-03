@@ -1,4 +1,4 @@
-<app-toolbar-menu [menuTitle]="menuName"></app-toolbar-menu>
+<app-toolbar-menu></app-toolbar-menu>
 
 <ng-container *ngIf="!isLoginRoute; else loginContent">
   <mat-sidenav-container>
@@ -50,7 +50,7 @@
         </mat-toolbar-row>
 
         <mat-toolbar-row style="padding-bottom: 20px; padding-left: 20px;">
-          <span *ngIf="!popText">{{menuName}}</span>
+          <span>{{menuName}}</span>
         </mat-toolbar-row>
       </mat-toolbar>
 
