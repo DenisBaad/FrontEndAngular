@@ -8,8 +8,8 @@ import { MatFormField, MatInputModule } from '@angular/material/input';
 import { FormatarMoedaDirective } from '../../../shared/directives/formatarMoedaDirective';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { ResponsePlano } from '../../../shared/models/interfaces/responses/planos/ResponsePlano';
-import { ResponseCliente } from '../../../shared/models/interfaces/responses/clientes/ResponseCliente';
+import { ItemPlano } from '../../../shared/models/interfaces/responses/planos/ResponsePlano';
+import { ItemCliente } from '../../../shared/models/interfaces/responses/clientes/ResponseCliente';
 import { EnumStatusFatura } from '../../../shared/models/enums/enumStatusFatura';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -34,8 +34,8 @@ import { MatIconModule } from '@angular/material/icon';
 export class FaturasFormComponent implements OnInit {
   @Output() handleFormSubmit = new EventEmitter<any>();
   form!: FormGroup;
-  planos: ResponsePlano[] | undefined;
-  clientes: ResponseCliente[] | undefined;
+  planos: ItemPlano[] | undefined;
+  clientes: ItemCliente[] | undefined;
 
   faturaStatusOptions = [
     { label: 'Aberto', value: EnumStatusFatura.Aberto },

@@ -11,7 +11,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { SafePipe } from '../../shared/pipes/safe.pipe';
 import { Subject, takeUntil, tap } from 'rxjs';
-import { ResponseCliente } from '../../shared/models/interfaces/responses/clientes/ResponseCliente';
+import { ItemCliente } from '../../shared/models/interfaces/responses/clientes/ResponseCliente';
 import { EnumStatusFatura } from '../../shared/models/enums/enumStatusFatura';
 import { FaturaService } from '../../services/fatura.service';
 import { ClientesService } from '../../services/clientes.service';
@@ -42,8 +42,8 @@ export class RelatorioFaturasComponent implements OnInit, OnDestroy {
   pdfUrl: string = '';
   loading: boolean = false;
   form: FormGroup;
-  clientesDatas: ResponseCliente[] = [];
-  clientesFiltrados: ResponseCliente[] = [];
+  clientesDatas: ItemCliente[] = [];
+  clientesFiltrados: ItemCliente[] = [];
   isMobile: boolean = false;
 
   public faturaStatusOptions = [
@@ -113,11 +113,11 @@ export class RelatorioFaturasComponent implements OnInit, OnDestroy {
   }
 
   public getClientes(): void {
-    this.clientesService.getClientes()
+    this.clientesService.getClientes(1, 1000000, '')
     .pipe(takeUntil(this.destroy$),
     tap((response) => {
-      this.clientesDatas = response;
-      this.clientesFiltrados = response;
+      this.clientesDatas = response.items;
+      this.clientesFiltrados = response.items;
       })
     )
     .subscribe();

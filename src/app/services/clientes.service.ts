@@ -25,8 +25,8 @@ export class ClientesService {
     return this.http.post<ResponseCliente>(`${this.API_URL}/clientes`, request, this.httpOptions).pipe(take(1));
   }
 
-  getClientes(): Observable<ResponseCliente[]> {
-    return this.http.get<ResponseCliente[]>(`${this.API_URL}/clientes`, this.httpOptions);
+  getClientes(pageNumber: number, pageSize: number, search: string = ''): Observable<ResponseCliente> {
+    return this.http.get<ResponseCliente>(`${this.API_URL}/clientes?pageNumber=${pageNumber}&pageSize=${pageSize}&search=${search}`, this.httpOptions);
   }
 
   putCliente(id: string, request: RequestCliente): Observable<void> {

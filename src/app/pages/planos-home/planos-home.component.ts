@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { ResponsePlano } from '../../shared/models/interfaces/responses/planos/ResponsePlano';
+import { ItemPlano } from '../../shared/models/interfaces/responses/planos/ResponsePlano';
 import { PlanoService } from '../../services/plano.service';
 import { PlanosTableComponent } from "./planos-table/planos-table.component";
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { PlanosFormComponent } from './planos-form/planos-form.component';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-planos-home',
@@ -15,8 +16,12 @@ import { PlanosFormComponent } from './planos-form/planos-form.component';
 })
 export class PlanosHomeComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
-  public planoData!: ResponsePlano[] | undefined;
+  public planoData!: ItemPlano[] | undefined;
   public isLoading = true;
+  public totalCount = 0;
+  public pageNumber = 0;
+  public pageSize = 10;
+  public searchValue = '';
 
   constructor(private planosService: PlanoService, private snackBar: MatSnackBar, private dialog: MatDialog) {}
 
@@ -27,21 +32,34 @@ export class PlanosHomeComponent implements OnInit, OnDestroy {
   getPlanos() {
     this.isLoading = true;
 
-    this.planosService.Get()
-    .pipe(takeUntil(this.destroy$))
-    .subscribe({
-      next: (response) => {
-        this.planoData = response;
-        this.isLoading = false;
-      },
-      error: (err) => {
+    this.planosService.Get(this.pageNumber + 1, this.pageSize, this.searchValue)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response) => {
+          this.planoData = response.items;
+          this.totalCount = response.totalCount;
+          this.isLoading = false;
+        },
+        error: (err) => {
           console.error('Erro ao buscar planos', err);
           this.isLoading = false;
         }
-    })
+      });
   }
 
-  handlePlanoEvent(plano?: ResponsePlano) {
+  onPageChange(event: PageEvent) {
+    this.pageNumber = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.getPlanos();
+  }
+
+  onSearch(value: string) {
+    this.searchValue = value;
+    this.pageNumber = 0;
+    this.getPlanos();
+  }
+
+  handlePlanoEvent(plano?: ItemPlano) {
     const dialogRef = this.dialog.open(PlanosFormComponent, {
       width: '80%',
       data: plano ? { plano } : {}

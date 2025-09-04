@@ -2,6 +2,10 @@
   <app-clientes-table
   [clienteData]="clienteData"
   [isLoading]="isLoading"
+  [totalCount]="totalCount"
+  [pageSize]="pageSize"
+  (pageChange)="onPageChange($event)"
+  (searchChange)="onSearch($event)"
   (openFormEvent)="handleClienteEvent($event)"
   (ativarInativarEvent)="handleAtivarInativar($event)"
   ></app-clientes-table>

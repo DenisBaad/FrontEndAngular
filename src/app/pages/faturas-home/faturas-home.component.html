@@ -4,6 +4,9 @@
   [planosDatas]="planosDatas"
   [clientesDatas]="clientesDatas"
   [isLoading]="isLoading"
+  [totalCount]="totalCount"
+  [pageSize]="pageSize"
+  (pageChange)="onPageChange($event)"
   (openFormEvent)="handleFaturaEvent($event)"
   ></app-faturas-table>
 </div>

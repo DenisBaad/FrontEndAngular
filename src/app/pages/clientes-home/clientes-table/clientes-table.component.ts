@@ -1,8 +1,8 @@
-import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { EnumTipoCliente } from '../../../shared/models/enums/enumTipoCliente';
 import { EnumStatusCliente } from '../../../shared/models/enums/enumStatusCliente';
-import { ResponseCliente } from '../../../shared/models/interfaces/responses/clientes/ResponseCliente';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { ItemCliente } from '../../../shared/models/interfaces/responses/clientes/ResponseCliente';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -34,19 +34,18 @@ import { MatSelectModule } from '@angular/material/select';
   templateUrl: './clientes-table.component.html',
   styleUrl: './clientes-table.component.scss'
 })
-export class ClientesTableComponent implements AfterViewInit {
-  @Input() clienteData: ResponseCliente[] | undefined;
+export class ClientesTableComponent {
+  @Input() clienteData: ItemCliente[] | undefined;
   @Input() isLoading = false;
+  @Input() totalCount = 0;
+  @Input() pageSize = 10;
+  @Output() pageChange = new EventEmitter<PageEvent>();
+  @Output() searchChange = new EventEmitter<string>();
   @Output() openFormEvent = new EventEmitter<any>();
   @Output() ativarInativarEvent = new EventEmitter<string>();
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
   EnumStatusCliente = EnumStatusCliente;
   displayedColumns: string[] = ['codigo', 'tipo', 'cpfCnpj', 'status', 'nome', 'identidade', 'orgaoExpedidor', 'dataNascimento', 'nomeFantasia', 'acoes'];
-  dataSource = new MatTableDataSource<ResponseCliente>();
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
+  dataSource = new MatTableDataSource<ItemCliente>();
 
   ngOnChanges() {
     if (this.clienteData) {
@@ -70,14 +69,16 @@ export class ClientesTableComponent implements AfterViewInit {
     return statuss [status]
   }
 
-  search(event: Event) {
+  onSearch(event: Event) {
     const target = event.target as HTMLInputElement;
-    const value = target.value.trim().toLowerCase();
-
-    this.dataSource.data = this.clienteData?.filter(cliente => cliente.nome.trim().toLowerCase().includes(value)) || []
+    this.searchChange.emit(target.value);
   }
 
-  openForm(plano?: ResponseCliente) {
+  onPage(event: PageEvent) {
+    this.pageChange.emit(event);
+  }
+
+  openForm(plano?: ItemCliente) {
     this.openFormEvent.emit(plano);
   }
 

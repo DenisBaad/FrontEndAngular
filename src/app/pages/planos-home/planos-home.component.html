@@ -2,6 +2,10 @@
   <app-planos-table
   [planoData]="planoData"
   [isLoading]="isLoading"
+  [totalCount]="totalCount"
+  [pageSize]="pageSize"
+  (pageChange)="onPageChange($event)"
+  (searchChange)="onSearch($event)"
   (openFormEvent)="handlePlanoEvent($event)"
   ></app-planos-table>
 </div>

@@ -1,15 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { ResponseFatura } from '../../shared/models/interfaces/responses/faturas/ResponseFatura';
+import { ItemFatura } from '../../shared/models/interfaces/responses/faturas/ResponseFatura';
 import { FaturaService } from '../../services/fatura.service';
-import { ResponsePlano } from '../../shared/models/interfaces/responses/planos/ResponsePlano';
-import { ResponseCliente } from '../../shared/models/interfaces/responses/clientes/ResponseCliente';
+import { ItemPlano } from '../../shared/models/interfaces/responses/planos/ResponsePlano';
+import { ItemCliente } from '../../shared/models/interfaces/responses/clientes/ResponseCliente';
 import { ClientesService } from '../../services/clientes.service';
 import { PlanoService } from '../../services/plano.service';
 import { FaturasTableComponent } from './faturas-table/faturas-table.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FaturasFormComponent } from './faturas-form/faturas-form.component';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-faturas-home',
@@ -19,10 +20,13 @@ import { FaturasFormComponent } from './faturas-form/faturas-form.component';
 })
 export class FaturasHomeComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
-  public faturasDatas: ResponseFatura[] | undefined;
+  public faturasDatas: ItemFatura[] | undefined;
   public isLoading = true;
-  public planosDatas: ResponsePlano[] | undefined;
-  public clientesDatas: ResponseCliente[] | undefined;
+  public planosDatas: ItemPlano[] | undefined;
+  public clientesDatas: ItemCliente[] | undefined;
+  public totalCount = 0;
+  public pageNumber = 0;
+  public pageSize = 10;
 
   constructor(private faturaService: FaturaService, private planoService: PlanoService, private clienteService: ClientesService, private snackBar: MatSnackBar, private dialog: MatDialog) {}
 
@@ -33,11 +37,11 @@ export class FaturasHomeComponent implements OnInit, OnDestroy {
   }
 
   public getPlanos(): void {
-    this.planoService.Get()
+    this.planoService.Get(1, 1000000, '')
     .pipe(takeUntil(this.destroy$))
     .subscribe({
       next: (response) => {
-      this.planosDatas = response;
+      this.planosDatas = response.items;
     },
     error: (err) => {
       console.error('Erro ao buscar planos', err);
@@ -46,11 +50,11 @@ export class FaturasHomeComponent implements OnInit, OnDestroy {
   }
 
   public getClientes(): void {
-    this.clienteService.getClientes()
+    this.clienteService.getClientes(1, 1000000, '')
     .pipe(takeUntil(this.destroy$))
     .subscribe({
       next: (response) => {
-      this.clientesDatas = response;
+      this.clientesDatas = response.items;
       },
       error: (err) => {
         console.error('Erro ao buscar clientes', err);
@@ -61,11 +65,12 @@ export class FaturasHomeComponent implements OnInit, OnDestroy {
   getFaturas(): void {
     this.isLoading = true;
 
-    this.faturaService.Get()
+    this.faturaService.Get(this.pageNumber + 1, this.pageSize)
     .pipe(takeUntil(this.destroy$))
     .subscribe({
       next: (response) => {
-      this.faturasDatas = response;
+      this.faturasDatas = response.items;
+      this.totalCount = response.totalCount;
       this.isLoading = false;
       },
       error: (err) => {
@@ -75,7 +80,13 @@ export class FaturasHomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  handleFaturaEvent(fatura?: ResponseFatura) {
+  onPageChange(event: PageEvent) {
+    this.pageNumber = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.getPlanos();
+  }
+
+  handleFaturaEvent(fatura?: ItemFatura) {
     const dialogRef = this.dialog.open(FaturasFormComponent, {
       width: '80%',
        data: fatura

@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { ClientesService } from '../../services/clientes.service';
-import { ResponseCliente } from '../../shared/models/interfaces/responses/clientes/ResponseCliente';
+import { ItemCliente } from '../../shared/models/interfaces/responses/clientes/ResponseCliente';
 import { ClientesTableComponent } from './clientes-table/clientes-table.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ClientesFormComponent } from './clientes-form/clientes-form.component';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-clientes-home',
@@ -15,8 +16,12 @@ import { ClientesFormComponent } from './clientes-form/clientes-form.component';
 })
 export class ClientesHomeComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<void> = new Subject();
-  clienteData: ResponseCliente[] | undefined;
+  clienteData: ItemCliente[] | undefined;
   public isLoading = true;
+  public totalCount = 0;
+  public pageNumber = 0;
+  public pageSize = 10;
+  public searchValue = '';
 
   constructor(private clientesService: ClientesService, private snackBar: MatSnackBar, private dialog: MatDialog){}
 
@@ -27,11 +32,12 @@ export class ClientesHomeComponent implements OnInit, OnDestroy {
   getClientes() {
     this.isLoading = true;
 
-    this.clientesService.getClientes()
+    this.clientesService.getClientes(this.pageNumber + 1, this.pageSize, this.searchValue)
     .pipe(takeUntil(this.destroy$))
     .subscribe({
       next: (response) => {
-        this.clienteData = response;
+        this.clienteData = response.items;
+        this.totalCount = response.totalCount;
         this.isLoading = false;
       },
       error: (err) => {
@@ -41,7 +47,19 @@ export class ClientesHomeComponent implements OnInit, OnDestroy {
     })
   }
 
-  handleClienteEvent(cliente?: ResponseCliente) {
+  onPageChange(event: PageEvent) {
+    this.pageNumber = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.getClientes();
+  }
+
+  onSearch(value: string) {
+    this.searchValue = value;
+    this.pageNumber = 0;
+    this.getClientes();
+  }
+
+  handleClienteEvent(cliente?: ItemCliente) {
     const dialogRef = this.dialog.open(ClientesFormComponent, {
       width: '80%',
       data: cliente ? { cliente } : {}

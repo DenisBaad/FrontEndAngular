@@ -2,7 +2,7 @@
 <div fxLayout="row wrap">
   <mat-form-field class="filtro-search-field" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
     <mat-label>Filtro</mat-label>
-    <input matInput type="text" placeholder="Pesquisar planos pela descrição" (input)="search($event)">
+    <input matInput type="text" placeholder="Pesquisar planos pela descrição" (input)="onSearch($event)">
       <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
 </div>
@@ -61,7 +61,13 @@
   </ng-template>
 
   <div class="paginator-wrapper">
-    <mat-paginator style="background-color: rgba(216, 216, 216, 0);" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements"></mat-paginator>
+    <mat-paginator style="background-color: rgba(216, 216, 216, 0);"
+      [length]="totalCount"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[10, 25, 50]"
+      showFirstLastButtons
+      (page)="onPage($event)">
+    </mat-paginator>
   </div>
 </div>
 

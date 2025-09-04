@@ -25,8 +25,8 @@ export class PlanoService {
     return this.http.post<ResponsePlano>(`${this.API_URL}/plano`, plano,this.httpOptions).pipe(take(1));
   }
 
-  Get(): Observable<ResponsePlano[]> {
-    return this.http.get<ResponsePlano[]>(`${this.API_URL}/plano`, this.httpOptions);
+  Get(pageNumber: number, pageSize: number, search: string = ''): Observable<ResponsePlano> {
+    return this.http.get<ResponsePlano>(`${this.API_URL}/plano?pageNumber=${pageNumber}&pageSize=${pageSize}&search=${search}`, this.httpOptions);
   }
 
   Put(plano: RequestPlano, id?: string): Observable<void> {

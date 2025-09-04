@@ -1,6 +1,11 @@
 import { EnumStatusFatura } from "../../../enums/enumStatusFatura";
 
 export interface ResponseFatura {
+  items: ItemFatura[];
+  totalCount: number;
+}
+
+export interface ItemFatura {
   id?: string;
   clienteId: string;
   planoId: string;

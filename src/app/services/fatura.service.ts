@@ -26,8 +26,8 @@ export class FaturaService {
     return this.http.post<ResponseFatura>(`${this.API_URL}/fatura`, fatura,this.httpOptions).pipe(take(1));
   }
 
-  Get(): Observable<ResponseFatura[]> {
-    return this.http.get<ResponseFatura[]>(`${this.API_URL}/fatura`, this.httpOptions);
+  Get(pageNumber: number, pageSize: number): Observable<ResponseFatura> {
+    return this.http.get<ResponseFatura>(`${this.API_URL}/fatura?pageNumber=${pageNumber}&pageSize=${pageSize}`, this.httpOptions);
   }
 
   Put(fatura: RequestFatura, id?: string): Observable<void> {
