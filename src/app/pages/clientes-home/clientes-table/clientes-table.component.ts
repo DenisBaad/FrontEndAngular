@@ -35,7 +35,7 @@ import { MatSelectModule } from '@angular/material/select';
   styleUrl: './clientes-table.component.scss'
 })
 export class ClientesTableComponent {
-  @Input() clienteData: ItemCliente[] | undefined;
+  @Input() clienteData: ItemCliente[] = [];
   @Input() isLoading = false;
   @Input() totalCount = 0;
   @Input() pageSize = 10;
@@ -48,9 +48,7 @@ export class ClientesTableComponent {
   dataSource = new MatTableDataSource<ItemCliente>();
 
   ngOnChanges() {
-    if (this.clienteData) {
-      this.dataSource.data = this.clienteData;
-    }
+    this.dataSource.data = this.clienteData;
   }
 
   tipoCliente(tipo: EnumTipoCliente) {

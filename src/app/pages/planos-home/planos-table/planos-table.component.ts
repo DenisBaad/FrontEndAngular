@@ -33,7 +33,7 @@ import { ItemPlano } from '../../../shared/models/interfaces/responses/planos/Re
   styleUrl: './planos-table.component.scss'
 })
 export class PlanosTableComponent {
-  @Input() planoData: ItemPlano[] | undefined;
+  @Input() planoData: ItemPlano[] = [];
   @Input() isLoading = false;
   @Input() totalCount = 0;
   @Input() pageSize = 10;
@@ -44,9 +44,7 @@ export class PlanosTableComponent {
   displayedColumns: string[] = ['descricao', 'valorPlano', 'quantidadeUsuarios', 'vigenciaMeses', 'acoes'];
 
   ngOnChanges() {
-    if (this.planoData) {
-      this.dataSource.data = this.planoData;
-    }
+    this.dataSource.data = this.planoData;
   }
 
   onSearch(event: Event) {

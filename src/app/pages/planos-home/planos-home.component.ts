@@ -16,7 +16,7 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class PlanosHomeComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
-  public planoData!: ItemPlano[] | undefined;
+  public planoData: ItemPlano[] = [];
   public isLoading = true;
   public totalCount = 0;
   public pageNumber = 0;

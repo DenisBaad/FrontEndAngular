@@ -13,8 +13,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
 import { FormatoMoedaPipe } from '../../../shared/pipes/formato-moeda.pipe';
-import { ItemCliente } from '../../../shared/models/interfaces/responses/clientes/ResponseCliente';
-import { ItemPlano } from '../../../shared/models/interfaces/responses/planos/ResponsePlano';
 
 @Component({
   selector: 'app-faturas-table',
@@ -36,9 +34,7 @@ import { ItemPlano } from '../../../shared/models/interfaces/responses/planos/Re
   styleUrl: './faturas-table.component.scss'
 })
 export class FaturasTableComponent {
-  @Input() faturasDatas: ItemFatura[] | undefined;
-  @Input() planosDatas: ItemPlano[] | undefined;
-  @Input() clientesDatas: ItemCliente[] | undefined;
+  @Input() faturasDatas: ItemFatura[] = [];
   @Input() isLoading = false;
   @Input() totalCount = 0;
   @Input() pageSize = 10;
@@ -48,9 +44,7 @@ export class FaturasTableComponent {
   displayedColumns: string[] = ['status', 'inicioVigencia', 'fimVigencia', 'valorTotal', 'planoId', 'clienteId', 'acoes'];
 
   ngOnChanges() {
-    if (this.faturasDatas) {
-      this.dataSource.data = this.faturasDatas;
-    }
+    this.dataSource.data = this.faturasDatas;
   }
 
   statusFatura(status: EnumStatusFatura) {
@@ -67,17 +61,9 @@ export class FaturasTableComponent {
     const value = target.value.trim().toLowerCase();
 
     this.dataSource.data = this.faturasDatas?.filter(fatura => {
-      const nomeCliente = this.getNomeCliente(fatura.clienteId).toLowerCase();
+      const nomeCliente = fatura.cliente?.nome?.toLowerCase() ?? '';
       return nomeCliente.includes(value);
     }) || [];
-  }
-
-  public getPlanoDescricao(planoId: string): string {
-    return this.planosDatas?.find(cat => cat.id === planoId)?.descricao ?? 'Plano não encontrado';
-  }
-
-  public getNomeCliente(clienteId: string): string {
-    return this.clientesDatas?.find(cat => cat.id === clienteId)?.nome ?? 'Cliente não encontrado';
   }
 
   onPage(event: PageEvent) {

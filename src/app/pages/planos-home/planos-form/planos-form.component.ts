@@ -30,20 +30,18 @@ export class PlanosFormComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public item: any, public dialogRef: MatDialogRef<PlanosFormComponent>, private fb: FormBuilder) {}
 
   ngOnInit(): void {
+    this.formPlano();
+  }
+
+  formPlano() {
+    const plano = this.item?.plano ?? {};
+
     this.form = this.fb.group({
-      descricao: ['', Validators.required],
-      valorPlano: [null, [Validators.required, Validators.maxLength(40)]],
-      quantidadeUsuarios: [null, [Validators.maxLength(40), Validators.required]],
-      vigenciaMeses: [null, Validators.required],
+      descricao: [plano.descricao ?? '', Validators.required],
+      valorPlano: [plano.valorPlano ?? null, [Validators.required, Validators.maxLength(40)]],
+      quantidadeUsuarios: [plano.quantidadeUsuarios ?? null, [Validators.required, Validators.maxLength(40)]],
+      vigenciaMeses: [plano.vigenciaMeses ?? null, Validators.required],
     });
-    if (this.item.plano) {
-      this.form.patchValue({
-        descricao: this.item.plano.descricao,
-        valorPlano: this.item.plano.valorPlano,
-        quantidadeUsuarios: this.item.plano.quantidadeUsuarios,
-        vigenciaMeses: this.item.plano.vigenciaMeses,
-      });
-    }
   }
 
   onClearForm(): void {

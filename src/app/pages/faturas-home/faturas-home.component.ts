@@ -20,10 +20,10 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class FaturasHomeComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
-  public faturasDatas: ItemFatura[] | undefined;
+  public faturasDatas: ItemFatura[] = [];
   public isLoading = true;
-  public planosDatas: ItemPlano[] | undefined;
-  public clientesDatas: ItemCliente[] | undefined;
+  public planosDatas: ItemPlano[] = [];
+  public clientesDatas: ItemCliente[] = [];
   public totalCount = 0;
   public pageNumber = 0;
   public pageSize = 10;

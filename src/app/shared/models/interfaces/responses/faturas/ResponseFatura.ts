@@ -1,4 +1,6 @@
 import { EnumStatusFatura } from "../../../enums/enumStatusFatura";
+import { ItemCliente } from "../clientes/ResponseCliente";
+import { ItemPlano } from "../planos/ResponsePlano";
 
 export interface ResponseFatura {
   items: ItemFatura[];
@@ -17,5 +19,7 @@ export interface ItemFatura {
   valorTotal: number;
   valorDesconto: number;
   valorPagamento: number;
+  cliente: ItemCliente;
+  plano: ItemPlano;
 }
 

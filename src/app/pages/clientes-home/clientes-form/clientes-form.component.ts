@@ -55,33 +55,21 @@ export class ClientesFormComponent implements OnInit {
     this.formCliente();
   }
 
-  formCliente(){
+  formCliente() {
+    const cliente = this.item?.cliente ?? {};
+
     this.clienteForm = this.fb.group({
-      codigo: [null, Validators.required],
-      tipo: [null, Validators.required],
-      cpfCnpj: [null, Validators.required],
-      status: [EnumStatusCliente.Ativo, Validators.required],
-      nome: [null, Validators.required],
-      identidade: [null],
-      orgaoExpedidor: [null],
-      dataNascimento: ['', Validators.required],
-      nomeFantasia: [null],
-      contato: [null, Validators.required],
-    })
-    if (this.item.cliente) {
-      this.clienteForm.patchValue({
-        codigo: this.item.cliente.codigo,
-        tipo: this.item.cliente.tipo,
-        cpfCnpj: this.item.cliente.cpfCnpj,
-        status: this.item.cliente.status,
-        nome: this.item.cliente.nome,
-        identidade: this.item.cliente.identidade,
-        orgaoExpedidor: this.item.cliente.orgaoExpedidor,
-        dataNascimento: this.item.cliente.dataNascimento,
-        nomeFantasia: this.item.cliente.nomeFantasia,
-        contato: this.item.cliente.contato
-      });
-   }
+      codigo: [cliente.codigo ?? null, Validators.required],
+      tipo: [cliente.tipo ?? null, Validators.required],
+      cpfCnpj: [cliente.cpfCnpj ?? null, Validators.required],
+      status: [cliente.status ?? EnumStatusCliente.Ativo, Validators.required],
+      nome: [cliente.nome ?? null, Validators.required],
+      identidade: [cliente.identidade ?? null],
+      orgaoExpedidor: [cliente.orgaoExpedidor ?? null],
+      dataNascimento: [cliente.dataNascimento ?? '', Validators.required],
+      nomeFantasia: [cliente.nomeFantasia ?? null],
+      contato: [cliente.contato ?? null, Validators.required],
+    });
   }
 
   buttonResetOrCharge(){

@@ -41,16 +41,12 @@
 
           <ng-container matColumnDef="planoId">
             <th mat-header-cell *matHeaderCellDef class="col-descricao"> Plano </th>
-            <td mat-cell *matCellDef="let element" class="col-descricao">
-              {{ getPlanoDescricao(element.planoId) }}
-            </td>
+            <td mat-cell *matCellDef="let element" class="col-descricao">{{ element.plano?.descricao ?? 'Plano não encontrado' }}</td>
           </ng-container>
 
           <ng-container matColumnDef="clienteId">
             <th mat-header-cell *matHeaderCellDef class="col-descricao"> Cliente </th>
-            <td mat-cell *matCellDef="let element" class="col-descricao">
-              {{ getNomeCliente(element.clienteId) }}
-            </td>
+            <td mat-cell *matCellDef="let element" class="col-descricao">{{ element.cliente?.nome ?? 'Cliente não encontrado' }}</td>
           </ng-container>
 
           <ng-container matColumnDef="acoes">

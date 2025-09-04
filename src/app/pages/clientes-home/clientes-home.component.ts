@@ -16,7 +16,7 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class ClientesHomeComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<void> = new Subject();
-  clienteData: ItemCliente[] | undefined;
+  clienteData: ItemCliente[] = [];
   public isLoading = true;
   public totalCount = 0;
   public pageNumber = 0;

@@ -51,27 +51,18 @@ export class FaturasFormComponent implements OnInit {
     this.initialFormFatura();
   }
 
-  initialFormFatura(){
+  initialFormFatura() {
+    const fatura = this.item?.fatura ?? {};
+
     this.form = this.fb.group({
-      status: ['', Validators.required],
-      inicioVigencia: [null , [Validators.required]],
-      fimVigencia: [null , [Validators.maxLength(40), Validators.required]],
-      dataVencimento: [null , [Validators.required]],
-      valorTotal: [null, [Validators.required]],
-      planoId: ['', [Validators.required]],
-      clienteId: ['', [Validators.required]],
-      });
-      if (this.item.fatura) {
-        this.form.patchValue({
-          status: this.item.fatura.status,
-          inicioVigencia: this.item.fatura.inicioVigencia,
-          fimVigencia: this.item.fatura.fimVigencia,
-          dataVencimento: this.item.fatura.dataVencimento,
-          valorTotal: this.item.fatura.valorTotal,
-          planoId: this.item.fatura.planoId,
-          clienteId: this.item.fatura.clienteId
-        });
-    }
+      status: [fatura.status ?? '', Validators.required],
+      inicioVigencia: [fatura.inicioVigencia ?? null, Validators.required],
+      fimVigencia: [fatura.fimVigencia ?? null, [Validators.required, Validators.maxLength(40)]],
+      dataVencimento: [fatura.dataVencimento ?? null, Validators.required],
+      valorTotal: [fatura.valorTotal ?? null, Validators.required],
+      planoId: [fatura.planoId ?? '', Validators.required],
+      clienteId: [fatura.clienteId ?? '', Validators.required],
+    });
   }
 
   onClearForm(): void {
