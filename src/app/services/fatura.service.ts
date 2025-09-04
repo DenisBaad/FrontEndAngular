@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { ResponseFatura } from '../shared/models/interfaces/responses/faturas/ResponseFatura';
-import { map, Observable, take } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { RequestFatura } from '../shared/models/interfaces/requests/faturas/RequestFatura';
 import { EnumStatusFatura } from '../shared/models/enums/enumStatusFatura';
 import { environment } from '../../environment/environment.prod';
@@ -23,7 +23,7 @@ export class FaturaService {
   };
 
   Post(fatura: RequestFatura): Observable<ResponseFatura> {
-    return this.http.post<ResponseFatura>(`${this.API_URL}/fatura`, fatura,this.httpOptions).pipe(take(1));
+    return this.http.post<ResponseFatura>(`${this.API_URL}/fatura`, fatura,this.httpOptions);
   }
 
   Get(pageNumber: number, pageSize: number): Observable<ResponseFatura> {
@@ -31,7 +31,7 @@ export class FaturaService {
   }
 
   Put(fatura: RequestFatura, id?: string): Observable<void> {
-    return this.http.put<void>(`${this.API_URL}/fatura/${id}`, fatura, this.httpOptions).pipe(take(1));
+    return this.http.put<void>(`${this.API_URL}/fatura/${id}`, fatura, this.httpOptions);
   }
 
   public getRelatorioFaturas(usuarioLogadoNome: string, dataAbertura: Date | null, dataFechamento: Date | null, status: EnumStatusFatura | null, clientesSelecionados: string[]): Observable<any> {

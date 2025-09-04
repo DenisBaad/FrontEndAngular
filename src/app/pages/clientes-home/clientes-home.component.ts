@@ -115,13 +115,8 @@ export class ClientesHomeComponent implements OnInit, OnDestroy {
   }
 
   private getErrorMessage(err: any): string {
-    if (err?.error?.errors && Array.isArray(err.error.errors)) {
-      const lista = err.error.errors.map((el: string) => `* ${el}`).join('\n');
-      return 'Erros encontrados:\n' + lista;
-    } else if (err?.error?.errors) {
-      return err.error.errors;
-    }
-    return 'Erro desconhecido. Detalhes indisponíveis.';
+    const lista = err?.error?.messages?.map((el: string) => `* ${el}`).join('\n');
+    return lista ? `Erros encontrados:\n${lista}` : 'Erro desconhecido. Detalhes indisponíveis.';
   }
 
   ngOnDestroy(): void {

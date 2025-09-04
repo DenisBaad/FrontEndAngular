@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable, take } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ResponseCliente } from '../shared/models/interfaces/responses/clientes/ResponseCliente';
 import { RequestCliente } from '../shared/models/interfaces/requests/clientes/RequestCliente';
 import { CookieService } from 'ngx-cookie-service';
@@ -22,7 +22,7 @@ export class ClientesService {
   };
 
   postCliente(request: RequestCliente): Observable<ResponseCliente> {
-    return this.http.post<ResponseCliente>(`${this.API_URL}/clientes`, request, this.httpOptions).pipe(take(1));
+    return this.http.post<ResponseCliente>(`${this.API_URL}/clientes`, request, this.httpOptions);
   }
 
   getClientes(pageNumber: number, pageSize: number, search: string = ''): Observable<ResponseCliente> {
@@ -30,10 +30,10 @@ export class ClientesService {
   }
 
   putCliente(id: string, request: RequestCliente): Observable<void> {
-    return this.http.put<void>(`${this.API_URL}/clientes/${id}`, request, this.httpOptions).pipe(take(1));
+    return this.http.put<void>(`${this.API_URL}/clientes/${id}`, request, this.httpOptions);
   }
 
   ativarInativarCliente(id: string): Observable<void> {
-    return this.http.patch<void>(`${this.API_URL}/clientes/${id}`, {}, this.httpOptions).pipe(take(1));
+    return this.http.patch<void>(`${this.API_URL}/clientes/${id}`, {}, this.httpOptions);
   }
 }

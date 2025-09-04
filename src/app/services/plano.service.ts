@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { Observable, take } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ResponsePlano } from '../shared/models/interfaces/responses/planos/ResponsePlano';
 import { RequestPlano } from '../shared/models/interfaces/requests/planos/RequestPlano';
 import { environment } from '../../environment/environment.prod';
@@ -22,7 +22,7 @@ export class PlanoService {
   };
 
   Post(plano: RequestPlano): Observable<ResponsePlano> {
-    return this.http.post<ResponsePlano>(`${this.API_URL}/plano`, plano,this.httpOptions).pipe(take(1));
+    return this.http.post<ResponsePlano>(`${this.API_URL}/plano`, plano,this.httpOptions);
   }
 
   Get(pageNumber: number, pageSize: number, search: string = ''): Observable<ResponsePlano> {
@@ -30,7 +30,7 @@ export class PlanoService {
   }
 
   Put(plano: RequestPlano, id?: string): Observable<void> {
-    return this.http.put<void>(`${this.API_URL}/plano/${id}`, plano, this.httpOptions).pipe(take(1));
+    return this.http.put<void>(`${this.API_URL}/plano/${id}`, plano, this.httpOptions);
   }
 }
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RequestUsuario } from '../shared/models/interfaces/requests/usuarios/RequestUsuario';
-import { Observable, take } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from '../../environment/environment.prod';
 import { ResponseUsuario } from '../shared/models/interfaces/responses/usuarios/ResponseUsuario';
 
@@ -14,6 +14,6 @@ export class UsuariosService {
   constructor(private http: HttpClient) { }
 
   postUsuario(request: RequestUsuario): Observable<ResponseUsuario> {
-    return this.http.post<ResponseUsuario>(`${this.API_URL}/usuarios`, request).pipe(take(1));
+    return this.http.post<ResponseUsuario>(`${this.API_URL}/usuarios`, request);
   }
 }
